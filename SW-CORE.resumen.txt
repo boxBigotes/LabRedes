@@ -1,0 +1,38 @@
+## SW-CORE resumen
+
+**Función:** Switch de distribución (Core) de la red.
+
+### Configuración implementada
+
+- VLANs:
+  - VLAN 10 - USERS
+  - VLAN 20 - SERVERS
+  - VLAN 30 - ADMIN
+  - VLAN 99 - MANAGEMENT
+  - VLAN 999 - NATIVE / UNUSED
+
+- Administración
+  - IP: 192.168.99.2/24
+  - Gateway: 192.168.99.1
+  - SSH v2 habilitado
+  - Usuario local para autenticación
+  - Banner MOTD
+
+- Troncales
+  - Fa0/23 → SW-ADMIN
+  - Fa0/24 → SW-ACCESS
+  - Gi0/1 → Router R1
+  - Encapsulación 802.1Q
+  - VLAN nativa 999
+  - VLAN permitidas: 10,20,30,99,999
+  - DTP deshabilitado (switchport nonegotiate)
+
+- Seguridad
+  - Contraseñas cifradas
+  - VLAN 1 deshabilitada
+  - Puertos no utilizados deshabilitados y asignados a VLAN 999
+  - PortFast y BPDU Guard en puertos de acceso
+  - Root Bridge para las VLAN 10,20,30,99 y 999
+
+- Conectividad
+  - Fa0/22 → Servidor (VLAN 20)

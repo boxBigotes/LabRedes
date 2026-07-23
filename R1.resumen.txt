@@ -1,0 +1,76 @@
+# R1 - Router Principal
+
+## Función
+
+R1 es el router principal de la red empresarial. Proporciona el enrutamiento entre VLANs mediante Router-on-a-Stick, administra el servicio DHCP para las VLAN de usuarios y administración, aplica políticas de seguridad mediante ACL y permite la administración remota por SSH.
+
+---
+
+## Interfaces
+
+| Interfaz | VLAN | Dirección IP | Función |
+|----------|------|--------------|---------|
+| G0/0.10 | 10 | 192.168.10.1/24 | Gateway de Usuarios |
+| G0/0.20 | 20 | 192.168.20.1/24 | Gateway de Servidores |
+| G0/0.30 | 30 | 192.168.30.1/24 | Gateway de Administración |
+| G0/0.99 | 99 | 192.168.99.1/24 | Gateway de Administración de equipos |
+| G0/0.999 | 999 | 192.168.254.1/24 | VLAN Nativa del enlace troncal |
+
+---
+
+## Servicios configurados
+
+- Router-on-a-Stick (802.1Q)
+- DHCP para VLAN 10 y VLAN 30
+- Administración remota mediante SSH v2
+- Banner MOTD
+- Contraseñas protegidas (`enable secret`)
+- Cifrado de contraseñas (`service password-encryption`)
+- Resolución de dominio: `empresa.local`
+
+---
+
+## DHCP
+
+### VLAN 10
+- Red: 192.168.10.0/24
+- Gateway: 192.168.10.1
+- DNS: 8.8.8.8
+- Exclusión: 192.168.10.1 – 192.168.10.20
+
+### VLAN 30
+- Red: 192.168.30.0/24
+- Gateway: 192.168.30.1
+- DNS: 8.8.8.8
+- Exclusión: 192.168.30.1 – 192.168.30.20
+
+> La VLAN 20 utiliza direccionamiento IP estático para el servidor.
+
+---
+
+## Seguridad
+
+### SSH
+
+- SSH versión 2
+- Usuario local: `admin`
+- Dominio: `empresa.local`
+
+### ACL
+
+ACL aplicada sobre la subinterfaz **G0/0.10**.
+
+Reglas implementadas:
+
+- Permite acceso desde VLAN 10 hacia la VLAN de servidores.
+- Bloquea acceso desde VLAN 10 hacia la VLAN de administración.
+- Bloquea acceso desde VLAN 10 hacia la VLAN de gestión.
+- Permite el resto del tráfico.
+
+---
+
+## Observaciones
+
+- Router configurado mediante subinterfaces IEEE 802.1Q.
+- Punto central del enrutamiento entre VLANs.
+- Preparado para integrar servicios adicionales (DNS, HTTP, FTP, TFTP).

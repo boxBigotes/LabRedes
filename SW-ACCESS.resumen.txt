@@ -1,0 +1,82 @@
+# SW-ACCESS resumen
+
+## Función
+Switch de acceso encargado de conectar los equipos de usuario pertenecientes a la VLAN 10.
+
+## Información general
+- Hostname: SW-ACCESS
+- Modelo: Cisco Catalyst 2960
+- VLAN de administración: VLAN 99
+- Dirección IP de administración: 192.168.99.3/24
+- Gateway: 192.168.99.1
+
+## VLANs utilizadas
+| VLAN | Nombre | Uso |
+|------|---------|----------------|
+|10|USERS|Equipos de usuario|
+|20|SERVERS|Tráfico hacia servidores|
+|30|ADMIN|Administración|
+|99|MANAGEMENT|Administración del switch|
+|999|NATIVE|VLAN nativa y puertos no utilizados|
+
+## Puertos de acceso
+
+| Puerto | Dispositivo | VLAN |
+|---------|-------------|------|
+|Fa0/1|PC1|10|
+|Fa0/2|PC2|10|
+|Fa0/3|PC3|10|
+|Fa0/4|PC4|10|
+
+## Trunks
+
+| Puerto | Conectado a |
+|---------|-------------|
+|Fa0/24|SW-CORE|
+
+VLANs permitidas:
+
+- 10
+- 20
+- 30
+- 99
+- 999
+
+Native VLAN:
+
+- 999
+
+DTP:
+
+- Deshabilitado (switchport nonegotiate)
+
+## Seguridad implementada
+
+### Administración
+
+- SSH versión 2
+- Usuario local
+- Dominio: empresa.local
+- Contraseñas cifradas
+- DNS Lookup deshabilitado
+
+### Seguridad de Capa 2
+
+- Port Security habilitado
+- Sticky MAC
+- Máximo de 1 MAC por puerto
+- Violación: Restrict
+- PortFast
+- BPDU Guard
+
+### Puertos no utilizados
+
+- VLAN 999
+- Shutdown
+
+## Estado del switch
+
+- VLAN 99 operativa
+- Gestión remota mediante SSH
+- Integrado al dominio empresa.local
+- Configurado para operar como switch de acceso de la red empresarial
